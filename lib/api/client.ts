@@ -1,4 +1,4 @@
-import type { ApiSuccess } from '@/types/api'
+import type { ApiErrorBody, ApiPage, ApiSuccess } from '@/types/api'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '/api'
 
@@ -13,7 +13,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<ApiSuccess<T>> {
+async function request<R>(path: string, init: RequestInit = {}): Promise<R> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...init,
     headers: {
@@ -21,13 +21,20 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<ApiSucc
       ...init.headers,
     },
   })
-  const body = await res.json()
-  console.log('[api]', path, body)
-  return body
+  if (!res.ok) {
+    const body: ApiErrorBody | null = await res.json().catch(() => null)
+    throw new ApiError(
+      res.status,
+      body?.error.code ?? 'UNKNOWN',
+      body?.error.message ?? 'Something went wrong. Please try again.'
+    )
+  }
+  return res.json()
 }
 
 export const api = {
-  get: <T>(path: string, init?: RequestInit) => request<T>(path, init),
+  get: <T>(path: string, init?: RequestInit) => request<ApiSuccess<T>>(path, init),
+  getPage: <T>(path: string, init?: RequestInit) => request<ApiPage<T>>(path, init),
   post: <T>(path: string, body: unknown, init?: RequestInit) =>
-    request<T>(path, { ...init, method: 'POST', body: JSON.stringify(body) }),
+    request<ApiSuccess<T>>(path, { ...init, method: 'POST', body: JSON.stringify(body) }),
 }

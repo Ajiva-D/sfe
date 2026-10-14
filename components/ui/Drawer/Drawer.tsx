@@ -15,7 +15,7 @@ export function Drawer({ open, title, onClose, children, footer }: DrawerProps) 
   if (!open) return null
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.overlay} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className={styles.panel}>
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>

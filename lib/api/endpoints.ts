@@ -34,7 +34,7 @@ function toSearchParams(query: object): string {
 export const getMe = (init?: RequestInit) => api.get<User>('/me', init)
 
 export const getTransactions = (query: TransactionQuery = {}, init?: RequestInit) =>
-  api.get<Transaction[]>(`/transactions${toSearchParams(query)}`, init)
+  api.getPage<Transaction>(`/transactions${toSearchParams(query)}`, init)
 
 export const getTransaction = (id: string, init?: RequestInit) =>
   api.get<Transaction>(`/transactions/${encodeURIComponent(id)}`, init)
