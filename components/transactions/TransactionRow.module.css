@@ -1,8 +1,11 @@
 .row {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto auto;
+  grid-template-columns: 40px minmax(0, 1fr) 112px 176px;
+  grid-template-areas:
+    'icon main status amount'
+    'icon main status meta';
   align-items: center;
-  gap: var(--space-4);
+  column-gap: var(--space-4);
   width: 100%;
   min-height: 68px;
   padding: var(--space-3) var(--space-6);
@@ -11,6 +14,10 @@
   background: none;
   text-align: left;
   cursor: pointer;
+}
+
+.compact {
+  grid-template-columns: 40px minmax(0, 1fr) auto auto;
 }
 
 .row:last-child {
@@ -22,17 +29,11 @@
 }
 
 .icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-full);
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
+  grid-area: icon;
 }
 
 .main {
+  grid-area: main;
   min-width: 0;
 }
 
@@ -53,13 +54,15 @@
   white-space: nowrap;
 }
 
-.end {
-  display: block;
-  text-align: right;
+.status {
+  display: flex;
+  grid-area: status;
 }
 
-.amount,
-.credit {
+.amount {
+  grid-area: amount;
+  align-self: end;
+  justify-self: end;
   font-size: var(--text-md);
   font-weight: var(--weight-semibold);
 }
@@ -69,9 +72,36 @@
 }
 
 .meta {
-  display: block;
+  grid-area: meta;
+  align-self: start;
+  justify-self: end;
   margin-top: var(--space-1);
   font-size: var(--text-xs);
   color: var(--color-text-subtle);
   white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .row:not(.compact) {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'icon main amount'
+      'icon main status';
+    column-gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .row:not(.compact) .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .row:not(.compact) .status {
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+
+  .row:not(.compact) .meta {
+    display: none;
+  }
 }

@@ -1,0 +1,47 @@
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.search {
+  flex: 1;
+}
+
+.type {
+  width: 200px;
+}
+
+.status {
+  width: 180px;
+}
+
+/* Keeps its space when hidden so the fields don't shift as filters change. */
+.hidden {
+  visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search,
+  .clear {
+    grid-column: 1 / -1;
+  }
+
+  .type,
+  .status {
+    width: auto;
+  }
+
+  .clear {
+    justify-self: start;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

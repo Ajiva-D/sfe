@@ -16,14 +16,14 @@ const tx: Transaction = {
 }
 
 describe('TransactionRow', () => {
-  it('renders narration as text, not HTML', () => {
+  it('strips markup from the narration without rendering it', () => {
     const { container } = render(<TransactionRow transaction={tx} />)
-    expect(screen.getByText(tx.narration)).toBeInTheDocument()
+    expect(screen.getByText('Bill payment')).toBeInTheDocument()
     expect(container.querySelector('img')).toBeNull()
   })
 
-  it('shows the fee in the transaction currency', () => {
-    render(<TransactionRow transaction={tx} />)
+  it('shows the fee in the transaction currency on the dashboard', () => {
+    render(<TransactionRow transaction={tx} compact />)
     expect(screen.getByText('$2.23')).toBeInTheDocument()
   })
 })

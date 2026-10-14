@@ -66,4 +66,14 @@
     max-height: 90vh;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
+
+  .panel::before {
+    content: '';
+    align-self: center;
+    width: 36px;
+    height: 4px;
+    margin-top: var(--space-2);
+    border-radius: var(--radius-full);
+    background: var(--color-border-strong);
+  }
 }
