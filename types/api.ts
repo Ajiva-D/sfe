@@ -72,6 +72,11 @@ export interface ApiSuccess<T> {
   meta?: PageMeta
 }
 
+export interface ApiPage<T> {
+  data: T[]
+  meta: PageMeta
+}
+
 export interface ApiErrorBody {
   error: { code: string; message: string }
 }
