@@ -29,7 +29,8 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <div
+    <button
+      type="button"
       className={cx(
         styles.button,
         styles[variant],
@@ -38,12 +39,13 @@ export function Button({
         disabled && styles.disabled,
         className
       )}
-      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      onClick={onClick}
       {...rest}
     >
       {iconLeft && <Icon name={iconLeft} size={16} />}
       {children}
       {iconRight && <Icon name={iconRight} size={16} />}
-    </div>
+    </button>
   )
 }
