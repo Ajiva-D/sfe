@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { Transaction } from '@/types/api'
 import { Card, CardHeader, Drawer, Money } from '@/components/ui'
-import { TransactionRow, TransactionRowsSkeleton } from '@/components/transactions'
+import { CompactTransactionList, TransactionRow, TransactionRowsSkeleton } from '@/components/transactions'
 import { getTransactions } from '@/lib/api/endpoints'
 import { formatDateTime, TRANSACTION_STATUS_LABELS } from '@/lib/format'
 import styles from './RecentTransactions.module.css'
@@ -35,9 +35,13 @@ export function RecentTransactions() {
       </div>
       {isLoading && <TransactionRowsSkeleton count={LIMIT} />}
       {!isLoading && !transactions?.length && <p className={styles.message}>No transactions yet.</p>}
-      {transactions?.map((tx) => (
-        <TransactionRow key={tx.id} transaction={tx} onSelect={setSelected} compact />
-      ))}
+      {transactions && (
+        <CompactTransactionList>
+          {transactions.map((tx) => (
+            <TransactionRow key={tx.id} transaction={tx} onSelect={setSelected} compact />
+          ))}
+        </CompactTransactionList>
+      )}
 
       <Drawer open={selected !== null} title="Transaction details" onClose={() => setSelected(null)}>
         {selected && (

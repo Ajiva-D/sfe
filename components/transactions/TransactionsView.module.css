@@ -23,6 +23,16 @@
   color: var(--color-text-muted);
 }
 
+.results {
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+/* Previous results stay on screen while new ones load; the delay keeps fast responses from flickering. */
+.stale {
+  opacity: 0.6;
+  transition-delay: 150ms;
+}
+
 .footer {
   display: flex;
   align-items: center;

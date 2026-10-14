@@ -101,6 +101,11 @@
   background: none;
   color: var(--color-text-muted);
   cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.copy:active {
+  transform: scale(0.94);
 }
 
 .copy:hover {

@@ -16,8 +16,16 @@
   cursor: pointer;
 }
 
+/* Edge tracks are auto so they absorb each row's padding (subgrid adds it to the edge tracks). */
+.compactList {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  column-gap: var(--space-4);
+}
+
 .compact {
-  grid-template-columns: 40px minmax(0, 1fr) auto auto;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
 }
 
 .row:last-child {
@@ -82,6 +90,25 @@
 }
 
 @media (max-width: 640px) {
+  /*
+   * Shared columns would let the widest amount narrow every row's title, so each row sizes itself here.
+   * The date and fee line wraps rather than squeezing out the title.
+   */
+  .compactList {
+    display: block;
+  }
+
+  .compact {
+    grid-template-columns: auto minmax(0, 1fr) auto fit-content(40%);
+    column-gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .compact .meta {
+    white-space: normal;
+    text-align: right;
+  }
+
   .row:not(.compact) {
     grid-template-columns: 36px minmax(0, 1fr) auto;
     grid-template-areas:

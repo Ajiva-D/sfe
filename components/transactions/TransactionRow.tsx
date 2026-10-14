@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { Transaction } from '@/types/api'
 import { Money } from '@/components/ui'
 import { cx } from '@/lib/cx'
@@ -48,4 +49,9 @@ export function TransactionRow({ transaction: tx, onSelect, compact = false }: T
       </span>
     </button>
   )
+}
+
+/** Lines up compact rows' columns (dot, amount) across the list. */
+export function CompactTransactionList({ children }: { children: ReactNode }) {
+  return <div className={styles.compactList}>{children}</div>
 }

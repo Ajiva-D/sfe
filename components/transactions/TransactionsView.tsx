@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import type { Transaction } from '@/types/api'
 import { Button, Card, Drawer, EmptyState, Pagination } from '@/components/ui'
 import { useTransactions } from '@/lib/api/queries'
+import { cx } from '@/lib/cx'
 import { TransactionDetails } from './TransactionDetails'
 import { TransactionFilters } from './TransactionFilters'
 import { TransactionList, TransactionListSkeleton } from './TransactionList'
@@ -53,7 +54,7 @@ export function TransactionsView() {
       <TransactionsHeader subtitle={subtitle} />
       <TransactionFilters params={{ q, type, status }} hasFilters={hasFilters} />
 
-      <div aria-busy={list.isFetching}>
+      <div aria-busy={list.isFetching} className={cx(styles.results, isPlaceholderData && styles.stale)}>
         {data?.meta.total === 0 ? (
           <Card padding="none">
             {hasFilters ? (

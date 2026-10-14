@@ -28,6 +28,11 @@
   border: 0;
   background: none;
   cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.page:active {
+  transform: scale(0.97);
 }
 
 .page:hover {
